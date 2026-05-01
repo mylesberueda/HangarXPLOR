@@ -1,7 +1,7 @@
 
-var HangarXPLOR = HangarXPLOR || {};
+var StardeckHX = StardeckHX || {};
 
-HangarXPLOR.ParseUpgrade = function()
+StardeckHX.ParseUpgrade = function()
 {
   this.filters.is_upgrade = $('.js-upgrade-data', this).length > 0;
   
@@ -11,20 +11,20 @@ HangarXPLOR.ParseUpgrade = function()
 
     $('.title:contains(Upgrade)', this).after('<div class="kind">Upgrade</div>');
 
-    HangarXPLOR._upgradeCount += 1;
+    StardeckHX._upgradeCount += 1;
 
     this.displayName = this.upgrade_data.match_items[0].name + ' to ' + this.upgrade_data.target_items[0].name
 
     var target_name = this.upgrade_data.target_items[0].name;
     var i, j;
-    for (i = 0, j = HangarXPLOR._shipMatrix.length; i < j; i++) {
-      if (target_name.toLowerCase().indexOf(HangarXPLOR._shipMatrix[i].name.toLowerCase()) > -1) {
+    for (i = 0, j = StardeckHX._shipMatrix.length; i < j; i++) {
+      if (target_name.toLowerCase().indexOf(StardeckHX._shipMatrix[i].name.toLowerCase()) > -1) {
 
-        HangarXPLOR.Log('Matched', HangarXPLOR._shipMatrix[i].name, 'in', target_name);
+        StardeckHX.Log('Matched', StardeckHX._shipMatrix[i].name, 'in', target_name);
 
-        target_name = (HangarXPLOR._shipMatrix[i].displayName || HangarXPLOR._shipMatrix[i].name);
-        if (HangarXPLOR._shipMatrix[i].thumbnail != undefined) {
-          $('.basic-infos .image', this).css({ 'background-image': 'url("' + HangarXPLOR._shipMatrix[i].thumbnail + '")'});
+        target_name = (StardeckHX._shipMatrix[i].displayName || StardeckHX._shipMatrix[i].name);
+        if (StardeckHX._shipMatrix[i].thumbnail != undefined) {
+          $('.basic-infos .image', this).css({ 'background-image': 'url("' + StardeckHX._shipMatrix[i].thumbnail + '")'});
         }
         break;
       }

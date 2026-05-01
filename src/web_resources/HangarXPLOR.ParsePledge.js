@@ -1,19 +1,19 @@
 
-var HangarXPLOR = HangarXPLOR || {};
+var StardeckHX = StardeckHX || {};
 
-HangarXPLOR._shipCount     = HangarXPLOR._shipCount || 0;
-HangarXPLOR._upgradeCount  = HangarXPLOR._upgradeCount || 0;
-HangarXPLOR._giftableCount = HangarXPLOR._giftableCount || 0;
-HangarXPLOR._packageCount  = HangarXPLOR._packageCount || 0;
-HangarXPLOR._ltiCount      = HangarXPLOR._ltiCount || 0;
-HangarXPLOR._warbondCount  = HangarXPLOR._warbondCount || 0;
-HangarXPLOR._raw           = HangarXPLOR._raw || [];
+StardeckHX._shipCount     = StardeckHX._shipCount || 0;
+StardeckHX._upgradeCount  = StardeckHX._upgradeCount || 0;
+StardeckHX._giftableCount = StardeckHX._giftableCount || 0;
+StardeckHX._packageCount  = StardeckHX._packageCount || 0;
+StardeckHX._ltiCount      = StardeckHX._ltiCount || 0;
+StardeckHX._warbondCount  = StardeckHX._warbondCount || 0;
+StardeckHX._raw           = StardeckHX._raw || [];
 
 // Apply a pre-defined filter to a list of items
-HangarXPLOR.ParsePledge = function()
+StardeckHX.ParsePledge = function()
 {
   // Pre-cache raw markup
-  if (HangarXPLOR._fromCache != true) HangarXPLOR._raw.push(this.outerHTML);
+  if (StardeckHX._fromCache != true) StardeckHX._raw.push(this.outerHTML);
 
   var pledgeName  = $('.js-pledge-name', this).val() || '';
   var $wrapper    = $('.wrapper-col', this);
@@ -42,16 +42,16 @@ HangarXPLOR.ParsePledge = function()
 
     pledgeName = pledgeName.toLowerCase();
 
-    HangarXPLOR.PreProcess.apply(this, [ pledgeName ]);
-    HangarXPLOR.ParseShip.apply(this, [ pledgeName ]);
-    HangarXPLOR.ParseComponent.apply(this, [ pledgeName ]);
-    HangarXPLOR.ParseEquipment.apply(this, [ pledgeName ]);
-    HangarXPLOR.ParseSkin.apply(this, [ pledgeName ]);
-    HangarXPLOR.ParseDecoration.apply(this, [ pledgeName ]);
-    HangarXPLOR.ParseUpgrade.apply(this, [ pledgeName ]);
-    HangarXPLOR.ParseReward.apply(this, [ pledgeName ]);
-    HangarXPLOR.ParseCoupon.apply(this, [ pledgeName ]);
-    HangarXPLOR.ParseHangar.apply(this, [ pledgeName ]);
+    StardeckHX.PreProcess.apply(this, [ pledgeName ]);
+    StardeckHX.ParseShip.apply(this, [ pledgeName ]);
+    StardeckHX.ParseComponent.apply(this, [ pledgeName ]);
+    StardeckHX.ParseEquipment.apply(this, [ pledgeName ]);
+    StardeckHX.ParseSkin.apply(this, [ pledgeName ]);
+    StardeckHX.ParseDecoration.apply(this, [ pledgeName ]);
+    StardeckHX.ParseUpgrade.apply(this, [ pledgeName ]);
+    StardeckHX.ParseReward.apply(this, [ pledgeName ]);
+    StardeckHX.ParseCoupon.apply(this, [ pledgeName ]);
+    StardeckHX.ParseHangar.apply(this, [ pledgeName ]);
 
     this.melt_value              = parseFloat(this.pledge_cost.replace("$", "").replace(",", "").replace(" USD", ""));
     if (this.melt_value != this.melt_value) this.melt_value = 0; // NaN safety
@@ -83,11 +83,11 @@ HangarXPLOR.ParsePledge = function()
         (this.filters.has_component ? 1 : 0) +
         (this.filters.has_decoration ? 1 : 0) > 1) this.pledge_type = 'loot';
     
-    if (this.filters.is_package)  HangarXPLOR._packageCount += 1;
-    if (this.filters.is_giftable) HangarXPLOR._giftableCount += 1;
+    if (this.filters.is_package)  StardeckHX._packageCount += 1;
+    if (this.filters.is_giftable) StardeckHX._giftableCount += 1;
     
-    var prefix = HangarXPLOR._setting.NoPrefix   ? '' : this.pledge_type + ' - ';
-    var suffix = HangarXPLOR._setting.NoPledgeID ? '' : ' (' + this.pledge_id + ')';
+    var prefix = StardeckHX._setting.NoPrefix   ? '' : this.pledge_type + ' - ';
+    var suffix = StardeckHX._setting.NoPledgeID ? '' : ' (' + this.pledge_id + ')';
     this.displayName = prefix + this.displayName + suffix;
     
     $wrapper.append($("<div>", { class: 'date-col melt-col' }).append($('<label>', { text: 'Melt Value: ' }), this.pledge_cost));
@@ -103,8 +103,8 @@ HangarXPLOR.ParsePledge = function()
     // }
     
   } else {
-    HangarXPLOR.Log('Warning: Error parsing', this.innerHTML);
+    StardeckHX.Log('Warning: Error parsing', this.innerHTML);
   }
 
-  HangarXPLOR._inventory.push(this);
+  StardeckHX._inventory.push(this);
 }

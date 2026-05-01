@@ -1,7 +1,7 @@
 
-var HangarXPLOR = HangarXPLOR || {};
+var StardeckHX = StardeckHX || {};
 
-HangarXPLOR.ParseReward = function(pledgeName)
+StardeckHX.ParseReward = function(pledgeName)
 {
   this.filters.is_reward = pledgeName.indexOf('reward') > -1;
 }

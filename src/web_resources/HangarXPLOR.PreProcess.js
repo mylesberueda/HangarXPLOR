@@ -1,7 +1,7 @@
 
-var HangarXPLOR = HangarXPLOR || {};
+var StardeckHX = StardeckHX || {};
 
-HangarXPLOR.PreProcess = function()
+StardeckHX.PreProcess = function()
 {
   // TODO: Apocalypse Arms Havoc Mouth Edition: FPS equipment -> Component
   // TODO: Idris-P After Market Kit: Inject Component

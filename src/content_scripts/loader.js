@@ -1,26 +1,16 @@
 /* eslint no-console: "off" */
 !function() {
-  var namespace = 'HangarXPLOR';
+  var namespace = 'StardeckHX';
   
-  var styles = [
-    'web_resources/HangarXPLOR.css'
-  ];
-  
+  var styles = [];
+
   var scripts = [
-    'web_resources/fuse.min.js', // Fuzzy Search Library
     'web_resources/HangarXPLOR.js',
-    // 'web_resources/HangarXPLOR.Debug.js', // Uncomment to debug third party hangar HTML
     'web_resources/HangarXPLOR.Download.js',
-    'web_resources/HangarXPLOR.Toggle.js',
-    'web_resources/HangarXPLOR.Templates.js',
     'web_resources/HangarXPLOR.Sort.js',
     'web_resources/HangarXPLOR.Ships.js',
-    'web_resources/HangarXPLOR.SearchBox.js',
-    'web_resources/HangarXPLOR.Search.js',
     'web_resources/HangarXPLOR.SaveCache.js',
     'web_resources/HangarXPLOR.SaveSettings.js',
-    'web_resources/HangarXPLOR.Render.js',
-    'web_resources/HangarXPLOR.Pager.js',
     'web_resources/HangarXPLOR.ParseComponent.js',
     'web_resources/HangarXPLOR.ParseCoupon.js',
     'web_resources/HangarXPLOR.ParseDecoration.js',
@@ -37,12 +27,7 @@
     'web_resources/HangarXPLOR.LoadCache.js',
     'web_resources/HangarXPLOR.LoadSettings.js',
     'web_resources/HangarXPLOR.LoadPage.js',
-    'web_resources/HangarXPLOR.Filter.js',
-    'web_resources/HangarXPLOR.Dropdown.js',
-    'web_resources/HangarXPLOR.DrawUI.js',
     'web_resources/HangarXPLOR.Components.js',
-    'web_resources/HangarXPLOR.Button.js',
-    'web_resources/HangarXPLOR.BulkUI.js',
     'web_resources/shims.chrome.storage.js'
   ];
   
@@ -79,22 +64,21 @@
     
     switch (event.data.type)
     {
-      case 'storage.sync.get.request': chrome.storage.sync.get(event.data.payload, function(result) { window.postMessage({ type: "storage.get.response", callbackIndex: event.data.callbackIndex, result: result }, "*") }); break;
-      case 'storage.sync.set.request': chrome.storage.sync.set(event.data.payload, function() { window.postMessage({ type: "storage.set.response", callbackIndex: event.data.callbackIndex }, "*") }); break;
-      case 'storage.sync.remove.request': chrome.storage.sync.remove(event.data.payload, function() { window.postMessage({ type: "storage.remove.response", callbackIndex: event.data.callbackIndex }, "*") }); break;
-      case 'storage.sync.clear.request': chrome.storage.sync.clear(function() { window.postMessage({ type: "storage.clear.response", callbackIndex: event.data.callbackIndex }, "*") }); break;
-      
-      case 'storage.local.get.request': chrome.storage.local.get(event.data.payload, function(result) { window.postMessage({ type: "storage.get.response", callbackIndex: event.data.callbackIndex, result: result }, "*") }); break;
-      case 'storage.local.set.request': chrome.storage.local.set(event.data.payload, function() { window.postMessage({ type: "storage.set.response", callbackIndex: event.data.callbackIndex }, "*") }); break;
-      case 'storage.local.remove.request': chrome.storage.local.remove(event.data.payload, function() { window.postMessage({ type: "storage.remove.response", callbackIndex: event.data.callbackIndex }, "*") }); break;
-      case 'storage.local.clear.request': chrome.storage.local.clear(function() { window.postMessage({ type: "storage.clear.response", callbackIndex: event.data.callbackIndex }, "*") }); break;
+      case 'stardeckhx.storage.sync.get.request': chrome.storage.sync.get(event.data.payload, function(result) { window.postMessage({ type: "stardeckhx.storage.get.response", callbackIndex: event.data.callbackIndex, result: result }, "*") }); break;
+      case 'stardeckhx.storage.sync.set.request': chrome.storage.sync.set(event.data.payload, function() { window.postMessage({ type: "stardeckhx.storage.set.response", callbackIndex: event.data.callbackIndex }, "*") }); break;
+      case 'stardeckhx.storage.sync.remove.request': chrome.storage.sync.remove(event.data.payload, function() { window.postMessage({ type: "stardeckhx.storage.remove.response", callbackIndex: event.data.callbackIndex }, "*") }); break;
+      case 'stardeckhx.storage.sync.clear.request': chrome.storage.sync.clear(function() { window.postMessage({ type: "stardeckhx.storage.clear.response", callbackIndex: event.data.callbackIndex }, "*") }); break;
+
+      case 'stardeckhx.storage.local.get.request': chrome.storage.local.get(event.data.payload, function(result) { window.postMessage({ type: "stardeckhx.storage.get.response", callbackIndex: event.data.callbackIndex, result: result }, "*") }); break;
+      case 'stardeckhx.storage.local.set.request': chrome.storage.local.set(event.data.payload, function() { window.postMessage({ type: "stardeckhx.storage.set.response", callbackIndex: event.data.callbackIndex }, "*") }); break;
+      case 'stardeckhx.storage.local.remove.request': chrome.storage.local.remove(event.data.payload, function() { window.postMessage({ type: "stardeckhx.storage.remove.response", callbackIndex: event.data.callbackIndex }, "*") }); break;
+      case 'stardeckhx.storage.local.clear.request': chrome.storage.local.clear(function() { window.postMessage({ type: "stardeckhx.storage.clear.response", callbackIndex: event.data.callbackIndex }, "*") }); break;
     }
   });
-  
-  // Relay storage changes that can be applied instantly into the page world
+
   chrome.storage.onChanged.addListener(function(changes, area) {
     if (area === 'sync' && changes._feature_Summary) {
-      window.postMessage({ type: 'feature.summary.changed', value: changes._feature_Summary.newValue }, '*');
+      window.postMessage({ type: 'stardeckhx.feature.summary.changed', value: changes._feature_Summary.newValue }, '*');
     }
   });
 

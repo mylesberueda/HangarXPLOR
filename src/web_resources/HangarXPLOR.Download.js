@@ -1,8 +1,8 @@
 
-var HangarXPLOR = HangarXPLOR || {};
+var StardeckHX = StardeckHX || {};
 
-HangarXPLOR._callbacks = HangarXPLOR._callbacks || {};
-HangarXPLOR._exportByName = HangarXPLOR._exportByName || {};
+StardeckHX._callbacks = StardeckHX._callbacks || {};
+StardeckHX._exportByName = StardeckHX._exportByName || {};
 
 (function() {
 
@@ -12,15 +12,15 @@ HangarXPLOR._exportByName = HangarXPLOR._exportByName || {};
   
   
   $.ajax({
-    url: $('#HangarXPLOR-ajax-ship-codes-json').data('ajax'),
+    url: $('#StardeckHX-ajax-ship-codes-json').data('ajax'),
     method: 'GET',
     dataType: 'json',
     success: function(data) {
-      $.map(data, (ship) => { HangarXPLOR._exportByName[ship.ship_name.toLowerCase()] = ship });
+      $.map(data, (ship) => { StardeckHX._exportByName[ship.ship_name.toLowerCase()] = ship });
     }
   });
 
-  HangarXPLOR.GetShipList = function($target) {
+  StardeckHX.GetShipList = function($target) {
     
     return $target.map(function() { 
       var $pledge = this;
@@ -40,17 +40,17 @@ HangarXPLOR._exportByName = HangarXPLOR._exportByName || {};
         var nickname = $('.custom-name-text', $ship).text();
         var i, j;
         
-        for (i = 0, j = HangarXPLOR._shipMatrix.length; i < j; i++) {
-          if (lookup.indexOf(HangarXPLOR._shipMatrix[i].name.toLowerCase()) > -1 || lookup.indexOf((HangarXPLOR._shipMatrix[i].displayName || 'NOTFOUND').toLowerCase()) > -1) {
+        for (i = 0, j = StardeckHX._shipMatrix.length; i < j; i++) {
+          if (lookup.indexOf(StardeckHX._shipMatrix[i].name.toLowerCase()) > -1 || lookup.indexOf((StardeckHX._shipMatrix[i].displayName || 'NOTFOUND').toLowerCase()) > -1) {
 
-            HangarXPLOR.Log('Matched', HangarXPLOR._shipMatrix[i].name, 'in', lookup);
+            StardeckHX.Log('Matched', StardeckHX._shipMatrix[i].name, 'in', lookup);
 
-            lookup = (HangarXPLOR._shipMatrix[i].export || HangarXPLOR._shipMatrix[i].name).toLowerCase().trim();
+            lookup = (StardeckHX._shipMatrix[i].export || StardeckHX._shipMatrix[i].name).toLowerCase().trim();
             break;
           }
         }
-        
-        var ship = HangarXPLOR._exportByName[lookup] ? { ...HangarXPLOR._exportByName[lookup] } : {
+
+        var ship = StardeckHX._exportByName[lookup] ? { ...StardeckHX._exportByName[lookup] } : {
           unidentified: 'Please report this ship to the plugin developers at https://github.com/dolkensp/HangarXPLOR/issues',
           ship_code: ($('.liner span', $ship).text().trim() + '_' + ship_name).replace(/[^a-z0-9]/gi, '_').replace(/__+/gi, '_'),
           manufacturer_name: $('.liner', $ship).text().trim().replace(/\(.*\)/, '').trim(),
@@ -73,26 +73,26 @@ HangarXPLOR._exportByName = HangarXPLOR._exportByName || {};
     }).sort(function(a, b) { return a.manufacturer == b.manufacturer ? (a.name < b.name ? -2 : 2) : (a.manufacturer < b.manufacturer ? -1 : 1); }).get();
   }
   
-  HangarXPLOR._callbacks.DownloadJSON = function(e) {
+  StardeckHX._callbacks.DownloadJSON = function(e) {
     e.preventDefault();
-    
+
     // TODO: Check why
-    var $target = $(HangarXPLOR._selected.length > 0 ? HangarXPLOR._selected : HangarXPLOR._inventory);
-    
-    $download.attr('href', 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(HangarXPLOR.GetShipList($target), null, 2)));
+    var $target = $(StardeckHX._selected.length > 0 ? StardeckHX._selected : StardeckHX._inventory);
+
+    $download.attr('href', 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(StardeckHX.GetShipList($target), null, 2)));
     $download.attr('download', 'shiplist.json');
     $download.attr('type', 'text/json');
     $download[0].click();
   }
-  
-  HangarXPLOR._callbacks.DownloadCSV = function(e) {
+
+  StardeckHX._callbacks.DownloadCSV = function(e) {
     e.preventDefault();
 
-    var $target = $(HangarXPLOR._selected.length > 0 ? HangarXPLOR._selected : HangarXPLOR._inventory);
+    var $target = $(StardeckHX._selected.length > 0 ? StardeckHX._selected : StardeckHX._inventory);
 
     // TODO: CSV support will need to be careful of user-entered data...
     var buffer = "Manufacturer, Ship, Lti, Warbond, ID, Pledge, Cost, Date\n";
-    buffer = buffer + HangarXPLOR.GetShipList($target).map(function(ship) { return [ '"' + ship.manufacturer_name + '"', '"' + ship.ship_name + '"', ship.lti, ship.warbond, ship.pledge_id, '"' + ship.pledge_name + '"', '"' + ship.pledge_cost + '"', '"' + ship.pledge_date + '"' ].join(',')}).join('\n')
+    buffer = buffer + StardeckHX.GetShipList($target).map(function(ship) { return [ '"' + ship.manufacturer_name + '"', '"' + ship.ship_name + '"', ship.lti, ship.warbond, ship.pledge_id, '"' + ship.pledge_name + '"', '"' + ship.pledge_cost + '"', '"' + ship.pledge_date + '"' ].join(',')}).join('\n')
 
     $download.attr('href', 'data:text/csv;charset=utf-8,' + encodeURIComponent(buffer));
     $download.attr('download', 'shiplist.csv');
@@ -100,7 +100,7 @@ HangarXPLOR._exportByName = HangarXPLOR._exportByName || {};
     $download[0].click();
   }
 
-  HangarXPLOR.GetUpgradeList = function($target) {
+  StardeckHX.GetUpgradeList = function($target) {
 
     return $target.map(function() {
       var $pledge = this;
@@ -121,31 +121,31 @@ HangarXPLOR._exportByName = HangarXPLOR._exportByName || {};
     }).get().filter(function(upgrade) { return upgrade !== null });
   }
 
-  HangarXPLOR.GetCombinedList = function($target) {
+  StardeckHX.GetCombinedList = function($target) {
     return {
-      ships:    HangarXPLOR.GetShipList($target),
-      upgrades: HangarXPLOR.GetUpgradeList($target)
+      ships:    StardeckHX.GetShipList($target),
+      upgrades: StardeckHX.GetUpgradeList($target)
     };
   }
 
-  HangarXPLOR._callbacks.DownloadUpgradesJSON = function(e) {
+  StardeckHX._callbacks.DownloadUpgradesJSON = function(e) {
     e.preventDefault();
 
-    var $target = $(HangarXPLOR._selected.length > 0 ? HangarXPLOR._selected : HangarXPLOR._inventory);
+    var $target = $(StardeckHX._selected.length > 0 ? StardeckHX._selected : StardeckHX._inventory);
 
-    $download.attr('href', 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(HangarXPLOR.GetUpgradeList($target), null, 2)));
+    $download.attr('href', 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(StardeckHX.GetUpgradeList($target), null, 2)));
     $download.attr('download', 'upgradelist.json');
     $download.attr('type', 'text/json');
     $download[0].click();
   }
 
-  HangarXPLOR._callbacks.DownloadUpgradesCSV = function(e) {
+  StardeckHX._callbacks.DownloadUpgradesCSV = function(e) {
     e.preventDefault();
 
-    var $target = $(HangarXPLOR._selected.length > 0 ? HangarXPLOR._selected : HangarXPLOR._inventory);
+    var $target = $(StardeckHX._selected.length > 0 ? StardeckHX._selected : StardeckHX._inventory);
 
     var buffer = "Pledge ID, Pledge, Cost, Date, Upgrade ID, Upgrade, From, To, Lti, Warbond\n";
-    buffer = buffer + HangarXPLOR.GetUpgradeList($target).map(function(upgrade) {
+    buffer = buffer + StardeckHX.GetUpgradeList($target).map(function(upgrade) {
       var from_name = upgrade.match_items && upgrade.match_items[0] ? upgrade.match_items[0].name : '';
       var to_name   = upgrade.target_items && upgrade.target_items[0] ? upgrade.target_items[0].name : '';
       return [ upgrade.pledge_id, '"' + upgrade.pledge_name + '"', '"' + upgrade.pledge_cost + '"', '"' + upgrade.pledge_date + '"', upgrade.id, '"' + upgrade.name + '"', '"' + from_name + '"', '"' + to_name + '"', upgrade.lti, upgrade.warbond ].join(',');
@@ -157,12 +157,12 @@ HangarXPLOR._exportByName = HangarXPLOR._exportByName || {};
     $download[0].click();
   }
 
-  HangarXPLOR._callbacks.DownloadCombinedJSON = function(e) {
+  StardeckHX._callbacks.DownloadCombinedJSON = function(e) {
     e.preventDefault();
 
-    var $target = $(HangarXPLOR._selected.length > 0 ? HangarXPLOR._selected : HangarXPLOR._inventory);
+    var $target = $(StardeckHX._selected.length > 0 ? StardeckHX._selected : StardeckHX._inventory);
 
-    $download.attr('href', 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(HangarXPLOR.GetCombinedList($target), null, 2)));
+    $download.attr('href', 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(StardeckHX.GetCombinedList($target), null, 2)));
     $download.attr('download', 'hangar.json');
     $download.attr('type', 'text/json');
     $download[0].click();

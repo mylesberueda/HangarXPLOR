@@ -1,7 +1,7 @@
 
-var HangarXPLOR = HangarXPLOR || {};
+var StardeckHX = StardeckHX || {};
 
-HangarXPLOR._components = {
+StardeckHX._components = {
   'J-Span Cryo-Star Cooler': {
     thumbnail: '/media/1c87itgn8hkoir/heap_infobox/Jspn_renders.png'
   },

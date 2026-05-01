@@ -1,7 +1,7 @@
 
-var HangarXPLOR = HangarXPLOR || {};
+var StardeckHX = StardeckHX || {};
 
-HangarXPLOR.ParseShip = function()
+StardeckHX.ParseShip = function()
 {
   var $ship = $('.kind:contains(Ship)', this).parent().parent();
 
@@ -29,26 +29,26 @@ HangarXPLOR.ParseShip = function()
     
     var found = false;
     var i, j;
-    for (i = 0, j = HangarXPLOR._shipMatrix.length; i < j; i++) {
-      if (this.ship_name.toLowerCase().indexOf(HangarXPLOR._shipMatrix[i].name.toLowerCase()) > -1) {
+    for (i = 0, j = StardeckHX._shipMatrix.length; i < j; i++) {
+      if (this.ship_name.toLowerCase().indexOf(StardeckHX._shipMatrix[i].name.toLowerCase()) > -1) {
 
-        HangarXPLOR.Log('Matched', HangarXPLOR._shipMatrix[i].name, 'in', this.ship_name);
+        StardeckHX.Log('Matched', StardeckHX._shipMatrix[i].name, 'in', this.ship_name);
 
-        this.ship_name = (HangarXPLOR._shipMatrix[i].displayName || HangarXPLOR._shipMatrix[i].name);
+        this.ship_name = (StardeckHX._shipMatrix[i].displayName || StardeckHX._shipMatrix[i].name);
         found = true;
-        if (HangarXPLOR._shipMatrix[i].thumbnail != undefined) {
-          $('.basic-infos .image', this).css({ 'background-image': 'url("' + HangarXPLOR._shipMatrix[i].thumbnail + '")'});
+        if (StardeckHX._shipMatrix[i].thumbnail != undefined) {
+          $('.basic-infos .image', this).css({ 'background-image': 'url("' + StardeckHX._shipMatrix[i].thumbnail + '")'});
         }
         break;
       }
     }
 
     if (!found) {
-      HangarXPLOR.Log('Unmatched', this.ship_name.toLowerCase());
+      StardeckHX.Log('Unmatched', this.ship_name.toLowerCase());
     }
     
     this.displayName = this.ship_name;
-    if (this.filters.has_nickname && !HangarXPLOR._setting.NoNickname) this.displayName = this.nickname;
+    if (this.filters.has_nickname && !StardeckHX._setting.NoNickname) this.displayName = this.nickname;
     if (this.filters.is_lti) this.displayName += ' - LTI';
   }
   else if (this.filters.is_combo)
@@ -65,5 +65,5 @@ HangarXPLOR.ParseShip = function()
     if (this.filters.is_lti) this.displayName += ' - LTI';
   }
 
-  HangarXPLOR._shipCount += $ship.length;
+  StardeckHX._shipCount += $ship.length;
 }

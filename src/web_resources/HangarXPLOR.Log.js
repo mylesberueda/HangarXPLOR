@@ -1,10 +1,10 @@
 
 /* eslint no-console: "off" */
-var HangarXPLOR = HangarXPLOR || {};
+var StardeckHX = StardeckHX || {};
 
-HangarXPLOR.Log = function()
+StardeckHX.Log = function()
 {
-  if (HangarXPLOR._logEnabled) {
+  if (StardeckHX._logEnabled) {
     console.log.apply(this, Array.from(arguments));
   }
 }

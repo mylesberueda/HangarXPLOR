@@ -1,7 +1,7 @@
 
-var HangarXPLOR = HangarXPLOR || {};
+var StardeckHX = StardeckHX || {};
 
-HangarXPLOR.ParseComponent = function()
+StardeckHX.ParseComponent = function()
 {
   var $component = $('.kind:contains(Component)', this).parent().parent();
 
@@ -18,9 +18,9 @@ HangarXPLOR.ParseComponent = function()
                               .replace(/ promo wb/i, '');
     
     if (!this.filters.has_ship) {
-      for (var i = 0, j = HangarXPLOR._componentMatrix.length; i < j; i++) {
-        if (this.component_name.toLowerCase().indexOf(HangarXPLOR._componentMatrix[i].name.toLowerCase()) > -1) {
-          $('.basic-infos .image', this).css({ 'background-image': 'url("' + HangarXPLOR._componentMatrix[i].thumbnail + '")'});
+      for (var i = 0, j = StardeckHX._componentMatrix.length; i < j; i++) {
+        if (this.component_name.toLowerCase().indexOf(StardeckHX._componentMatrix[i].name.toLowerCase()) > -1) {
+          $('.basic-infos .image', this).css({ 'background-image': 'url("' + StardeckHX._componentMatrix[i].thumbnail + '")'});
           break;
         }
       }

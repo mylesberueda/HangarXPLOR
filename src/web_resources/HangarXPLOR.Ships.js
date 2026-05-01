@@ -1,18 +1,18 @@
 
-var HangarXPLOR = HangarXPLOR || {};
+var StardeckHX = StardeckHX || {};
 
 /* Overrides for the ship matrix */
 /*******************************
  * key:         The name as expected from ship-matrix (if different)
  * name:        The name as expected from hangar
- * displayName: The name as displayed by HangarXPLOR
- * thumbnail:   The thumbnail displayed by HangarXPLOR
+ * displayName: The name as displayed by StardeckHX
+ * thumbnail:   The thumbnail displayed by StardeckHX
  * export:      Redirect export to another populated ship profile
  * 
  * url:         The url of the details page
  * focus:       The focus of the ship
  */
-HangarXPLOR._ships = {
+StardeckHX._ships = {
   'X1 Base': {
     name: 'X1'
   },

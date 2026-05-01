@@ -1,8 +1,8 @@
 
-var HangarXPLOR = HangarXPLOR || {};
+var StardeckHX = StardeckHX || {};
 
 // Sort a list, based on the defined sort order
-HangarXPLOR.Sort = function(list, sort)
+StardeckHX.Sort = function(list, sort)
 {
   switch (sort) {
     case "Purchased": return list.sort(function(a, b) { return a.pledge_id > b.pledge_id ? -1 : 1 });

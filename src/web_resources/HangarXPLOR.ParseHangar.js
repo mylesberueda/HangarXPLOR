@@ -1,7 +1,7 @@
 
-var HangarXPLOR = HangarXPLOR || {};
+var StardeckHX = StardeckHX || {};
 
-HangarXPLOR.ParseHangar = function()
+StardeckHX.ParseHangar = function()
 {
   var $hangar = $('.kind:contains(RSIItem_kind_HANGARPASS), .kind:contains(Hangar)', this).parent().parent();
 

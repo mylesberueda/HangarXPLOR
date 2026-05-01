@@ -1,34 +1,34 @@
 
-var HangarXPLOR = HangarXPLOR || {};
+var StardeckHX = StardeckHX || {};
 
-HangarXPLOR.SaveSettings = function(callback)
+StardeckHX.SaveSettings = function(callback)
 {
-  HangarXPLOR = HangarXPLOR || {};
-  HangarXPLOR._feature = HangarXPLOR._feature || {};
+  StardeckHX = StardeckHX || {};
+  StardeckHX._feature = StardeckHX._feature || {};
   
   var settings                 = settings || {};
-  settings._type               = HangarXPLOR._type || 'All';
-  settings._sort               = HangarXPLOR._sort || 'Purchased';
-  settings._pageNo             = HangarXPLOR._pageNo || 1;
-  settings._pageCount          = HangarXPLOR._pageCount || 10;
-  settings._logEnabled         = HangarXPLOR._logEnabled || false;
-  settings._cacheHash          = HangarXPLOR._cacheHash || 0;
-  settings._cacheSalt          = HangarXPLOR._cacheSalt || btoa(Math.random());
+  settings._type               = StardeckHX._type || 'All';
+  settings._sort               = StardeckHX._sort || 'Purchased';
+  settings._pageNo             = StardeckHX._pageNo || 1;
+  settings._pageCount          = StardeckHX._pageCount || 10;
+  settings._logEnabled         = StardeckHX._logEnabled || false;
+  settings._cacheHash          = StardeckHX._cacheHash || 0;
+  settings._cacheSalt          = StardeckHX._cacheSalt || btoa(Math.random());
   
-  settings._feature_LTI        = HangarXPLOR._feature.LTI      || '';
-  settings._feature_Warbond    = HangarXPLOR._feature.Warbond  || '';
-  settings._feature_Giftable   = HangarXPLOR._feature.Giftable || '';
-  settings._feature_Meltable   = HangarXPLOR._feature.Meltable || '';
-  settings._feature_Upgraded   = HangarXPLOR._feature.Upgraded || '';
-  settings._feature_Valuable   = HangarXPLOR._feature.Valuable || '';
-  settings._feature_Reward     = HangarXPLOR._feature.Reward   || '';
-  settings._feature_Summary    = HangarXPLOR._feature.Summary  || 'cash';
+  settings._feature_LTI        = StardeckHX._feature.LTI      || '';
+  settings._feature_Warbond    = StardeckHX._feature.Warbond  || '';
+  settings._feature_Giftable   = StardeckHX._feature.Giftable || '';
+  settings._feature_Meltable   = StardeckHX._feature.Meltable || '';
+  settings._feature_Upgraded   = StardeckHX._feature.Upgraded || '';
+  settings._feature_Valuable   = StardeckHX._feature.Valuable || '';
+  settings._feature_Reward     = StardeckHX._feature.Reward   || '';
+  settings._feature_Summary    = StardeckHX._feature.Summary  || 'cash';
 
-  settings._setting_NoPledgeID = HangarXPLOR._setting.NoPledgeID || false;
-  settings._setting_NoPrefix   = HangarXPLOR._setting.NoPrefix   || false;
-  settings._setting_NoNickname = HangarXPLOR._setting.NoNickname || false;
+  settings._setting_NoPledgeID = StardeckHX._setting.NoPledgeID || false;
+  settings._setting_NoPrefix   = StardeckHX._setting.NoPrefix   || false;
+  settings._setting_NoNickname = StardeckHX._setting.NoNickname || false;
   
-  HangarXPLOR.Log('Saved Settings', settings);
+  StardeckHX.Log('Saved Settings', settings);
   
   chrome.storage.sync.set(settings);
   

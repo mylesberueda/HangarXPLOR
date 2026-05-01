@@ -1,7 +1,7 @@
 
-var HangarXPLOR = HangarXPLOR || {};
+var StardeckHX = StardeckHX || {};
 
-HangarXPLOR.ParseDecoration = function()
+StardeckHX.ParseDecoration = function()
 {
   var $decoration = $('.kind:contains(Hangar decoration)', this).parent().parent();
 

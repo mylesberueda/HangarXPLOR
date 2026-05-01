@@ -1,7 +1,7 @@
 
-var HangarXPLOR = HangarXPLOR || {};
+var StardeckHX = StardeckHX || {};
 
-HangarXPLOR.ParseEquipment = function()
+StardeckHX.ParseEquipment = function()
 {
   var $equipment = $('.kind:contains(FPS Equipment)', this).parent().parent();
 

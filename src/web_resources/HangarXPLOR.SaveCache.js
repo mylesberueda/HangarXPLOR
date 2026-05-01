@@ -1,25 +1,25 @@
 
-var HangarXPLOR = HangarXPLOR || {};
+var StardeckHX = StardeckHX || {};
 
-HangarXPLOR.SaveCache = function(callback)
+StardeckHX.SaveCache = function(callback)
 {
-  if (HangarXPLOR._fromCache == true) return;
+  if (StardeckHX._fromCache == true) return;
   
   var cacheItems = {};
   
-  $.each(HangarXPLOR._raw, (index, item) => {
+  $.each(StardeckHX._raw, (index, item) => {
     cacheItems['cache:' + index] = item;
   });
   
-  cacheItems['cache:count'] = HangarXPLOR._raw.length;
-  cacheItems['cache:hash'] = HangarXPLOR._activeHash;
+  cacheItems['cache:count'] = StardeckHX._raw.length;
+  cacheItems['cache:hash'] = StardeckHX._activeHash;
   
-  delete HangarXPLOR._raw;
+  delete StardeckHX._raw;
   
   chrome.storage.local.clear();
   chrome.storage.local.set(cacheItems);
   
-  HangarXPLOR._cacheHash = HangarXPLOR._activeHash;
+  StardeckHX._cacheHash = StardeckHX._activeHash;
   
-  HangarXPLOR.SaveSettings(callback);
+  StardeckHX.SaveSettings(callback);
 }

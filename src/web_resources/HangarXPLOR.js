@@ -1,20 +1,36 @@
 
-var HangarXPLOR = HangarXPLOR || {};
+var StardeckHX = StardeckHX || {};
 
-HangarXPLOR.$list = null;                            // Element where we display the pledges
-HangarXPLOR._inventory = [];                         // Inventory containing all pledges
-HangarXPLOR._debugRoot = $('#HangarXPLOR-js-0').attr('src').replace(/(.*)web_resources.*/, "$1");
-HangarXPLOR._shipCount     = HangarXPLOR._shipCount || 0;
-HangarXPLOR._upgradeCount  = HangarXPLOR._upgradeCount || 0;
-HangarXPLOR._giftableCount = HangarXPLOR._giftableCount || 0;
-HangarXPLOR._packageCount  = HangarXPLOR._packageCount || 0;
-HangarXPLOR._ltiCount      = HangarXPLOR._ltiCount || 0;
-HangarXPLOR._cacheSalt     = HangarXPLOR._cacheSalt || btoa(Math.random());
-HangarXPLOR._initCount     = HangarXPLOR._initCount || 0;
+StardeckHX.UpdateStatus = StardeckHX.UpdateStatus || function() {};
+StardeckHX.MarkLoadingComplete = StardeckHX.MarkLoadingComplete || function() {
+  if (typeof StardeckHX.GetCombinedList === 'function' && chrome && chrome.storage && chrome.storage.local) {
+    try {
+      var combined = StardeckHX.GetCombinedList($(StardeckHX._inventory));
+      chrome.storage.local.set({ 'cache:parsed_export': {
+        generatedAt: new Date().toISOString(),
+        ships:       combined.ships,
+        upgrades:    combined.upgrades
+      }});
+    } catch (e) {
+      if (StardeckHX.Log) StardeckHX.Log('snapshot failed', e);
+    }
+  }
+};
+
+StardeckHX.$list = null;                            // Element where we display the pledges
+StardeckHX._inventory = [];                         // Inventory containing all pledges
+StardeckHX._debugRoot = $('#StardeckHX-js-0').attr('src').replace(/(.*)web_resources.*/, "$1");
+StardeckHX._shipCount     = StardeckHX._shipCount || 0;
+StardeckHX._upgradeCount  = StardeckHX._upgradeCount || 0;
+StardeckHX._giftableCount = StardeckHX._giftableCount || 0;
+StardeckHX._packageCount  = StardeckHX._packageCount || 0;
+StardeckHX._ltiCount      = StardeckHX._ltiCount || 0;
+StardeckHX._cacheSalt     = StardeckHX._cacheSalt || btoa(Math.random());
+StardeckHX._initCount     = StardeckHX._initCount || 0;
 
 var RSI = RSI || {};
 
-HangarXPLOR.Initialize = function()
+StardeckHX.Initialize = function()
 {  
   $.ajax({ 
     url: '/ship-matrix/index', 
@@ -22,9 +38,9 @@ HangarXPLOR.Initialize = function()
     dataType: 'json', 
     success: (response) => { 
       
-      var customShips = $.extend({}, HangarXPLOR._ships);
+      var customShips = $.extend({}, StardeckHX._ships);
       
-      HangarXPLOR._shipMatrix = response.data
+      StardeckHX._shipMatrix = response.data
         .map((ship) => {
           var rsiShip = {
             name: ship.name
@@ -50,7 +66,7 @@ HangarXPLOR.Initialize = function()
             focus: ship.focus,
           };
           
-          var customShip = HangarXPLOR._ships[rsiShip.name];
+          var customShip = StardeckHX._ships[rsiShip.name];
 
           delete customShips[rsiShip.name];
 
@@ -68,8 +84,8 @@ HangarXPLOR.Initialize = function()
           return 1;
         });
       
-      HangarXPLOR._componentMatrix = []
-        .concat($.map(HangarXPLOR._components, (component, key) => {
+      StardeckHX._componentMatrix = []
+        .concat($.map(StardeckHX._components, (component, key) => {
           if (component.name == undefined) component.name = key;
           return component;
         }))
@@ -79,16 +95,15 @@ HangarXPLOR.Initialize = function()
           return 1;
         });
       
-      HangarXPLOR.LoadSettings(function() {
+      StardeckHX.LoadSettings(function() {
         var $lists = $('.list-items');
         
         if ($lists.length == 1) {
-          HangarXPLOR.BulkUI();
-          HangarXPLOR.$list = $($lists[0]);
-          HangarXPLOR.$list.addClass('js-inventory');
+          StardeckHX.$list = $($lists[0]);
+          StardeckHX.$list.addClass('js-inventory');
           $lists = undefined;
           
-          HangarXPLOR.UpdateStatus(0);
+          StardeckHX.UpdateStatus(0);
           
           RSI.Api.Account.pledgeLog((payload) => {
     
@@ -98,17 +113,17 @@ HangarXPLOR.Initialize = function()
             // CIG Released ship naming in March 2021, which requires us to invalidate cache
             if (today.substr(0, 7) == '2021-03') safetySalt = today.substr(0, 13) + ':';
     
-            HangarXPLOR._activeHash = safetySalt + payload.data.rendered.length + ':' + btoa(payload.data.rendered.substr(39, 20)) + ':' + HangarXPLOR._cacheSalt;
+            StardeckHX._activeHash = safetySalt + payload.data.rendered.length + ':' + btoa(payload.data.rendered.substr(39, 20)) + ':' + StardeckHX._cacheSalt;
             
-            HangarXPLOR.LoadCache(HangarXPLOR.LoadPage);
+            StardeckHX.LoadCache(StardeckHX.LoadPage);
           });
           
         } else {
-          HangarXPLOR.Log('Error locating inventory');
+          StardeckHX.Log('Error locating inventory');
         }
       });
     }
   });
 }
 
-if (HangarXPLOR._initCount++ == 0) HangarXPLOR.Initialize();
+if (StardeckHX._initCount++ == 0) StardeckHX.Initialize();

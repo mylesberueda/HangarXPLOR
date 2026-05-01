@@ -17,54 +17,54 @@ chrome.storage.sync = chrome.storage.sync || {};
   
   chrome.storage.sync.get = function(payload, callback) {
     var key = cacheCallback(callback);
-    window.postMessage({ type: "storage.sync.get.request", payload: payload, callbackIndex: key }, "*");
+    window.postMessage({ type: "stardeckhx.storage.sync.get.request", payload: payload, callbackIndex: key }, "*");
   }
 
   chrome.storage.sync.set = function(payload, callback) {
     var key = cacheCallback(callback);
-    window.postMessage({ type: "storage.sync.set.request", payload: payload, callbackIndex: key }, "*");
+    window.postMessage({ type: "stardeckhx.storage.sync.set.request", payload: payload, callbackIndex: key }, "*");
   }
 
   chrome.storage.sync.remove = function(payload, callback) {
     var key = cacheCallback(callback);
-    window.postMessage({ type: "storage.sync.remove.request", payload: payload, callbackIndex: key }, "*");
+    window.postMessage({ type: "stardeckhx.storage.sync.remove.request", payload: payload, callbackIndex: key }, "*");
   }
 
   chrome.storage.sync.clear = function(payload, callback) {
     var key = cacheCallback(callback);
-    window.postMessage({ type: "storage.sync.clear.request", payload: payload, callbackIndex: key }, "*");
+    window.postMessage({ type: "stardeckhx.storage.sync.clear.request", payload: payload, callbackIndex: key }, "*");
   }
-  
+
   chrome.storage.local.get = function(payload, callback) {
     var key = cacheCallback(callback);
-    window.postMessage({ type: "storage.local.get.request", payload: payload, callbackIndex: key }, "*");
+    window.postMessage({ type: "stardeckhx.storage.local.get.request", payload: payload, callbackIndex: key }, "*");
   }
 
   chrome.storage.local.set = function(payload, callback) {
     var key = cacheCallback(callback);
-    window.postMessage({ type: "storage.local.set.request", payload: payload, callbackIndex: key }, "*");
+    window.postMessage({ type: "stardeckhx.storage.local.set.request", payload: payload, callbackIndex: key }, "*");
   }
 
   chrome.storage.local.remove = function(payload, callback) {
     var key = cacheCallback(callback);
-    window.postMessage({ type: "storage.local.remove.request", payload: payload, callbackIndex: key }, "*");
+    window.postMessage({ type: "stardeckhx.storage.local.remove.request", payload: payload, callbackIndex: key }, "*");
   }
 
   chrome.storage.local.clear = function(payload, callback) {
     var key = cacheCallback(callback);
-    window.postMessage({ type: "storage.local.clear.request", payload: payload, callbackIndex: key }, "*");
+    window.postMessage({ type: "stardeckhx.storage.local.clear.request", payload: payload, callbackIndex: key }, "*");
   }
-  
+
   window.addEventListener('message', function(event) {
     if (event.source != window) return;
     if ((event.data.type || false) == false) return;
-    
+
     switch (event.data.type)
     {
-      case 'storage.get.response':
-      case 'storage.set.response':
-      case 'storage.remove.response':
-      case 'storage.clear.response':
+      case 'stardeckhx.storage.get.response':
+      case 'stardeckhx.storage.set.response':
+      case 'stardeckhx.storage.remove.response':
+      case 'stardeckhx.storage.clear.response':
         if (callbacks[event.data.callbackIndex] != undefined)
         {
           callbacks[event.data.callbackIndex](event.data.result);
