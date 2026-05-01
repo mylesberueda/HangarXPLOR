@@ -1,7 +1,7 @@
 {
-  "description": "This extension improves the Hangar page on RobertsSpaceIndustries.com",
-  "name": "Star Citizen Hangar XPLORer",
-  "short_name": "HangarXPLOR",
+  "description": "Headless Stardeck Edition of HangarXPLOR by Peter Dolkens. Reads RSI hangar data and exposes it to stardeck.space.",
+  "name": "HangarXPLOR (Stardeck Edition)",
+  "short_name": "StardeckHX",
   "version": "0.0.0.1",
   "author": "/u/alluran (Peter Dolkens)",
   "icons": {
@@ -10,7 +10,7 @@
   "manifest_version": 3,
   "browser_specific_settings": {
       "gecko": {
-          "id": "hangarxplor@extension"
+          "id": "stardeck-edition@stardeck.space"
       }
   },
   "permissions": [
@@ -20,12 +20,9 @@
   ],
   "host_permissions": [
       "https://robertsspaceindustries.com/*",
-      "https://www.robertsspaceindustries.com/*"
-  ],
-  "optional_host_permissions": [
-      "https://*/*",
-      "http://localhost/*",
-      "https://localhost/*"
+      "https://www.robertsspaceindustries.com/*",
+      "https://stardeck.space/*",
+      "http://localhost/*"
   ],
   "action": {
       "default_icon": {
