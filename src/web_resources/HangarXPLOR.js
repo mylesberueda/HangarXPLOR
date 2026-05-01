@@ -17,20 +17,6 @@ StardeckHX.MarkLoadingComplete = StardeckHX.MarkLoadingComplete || function() {
   }
 };
 
-// Observer mode: when upstream HangarXPLOR is also installed and walking the
-// hangar, the upstream-observer.js content script captures every
-// /account/pledges XHR response into window.__StardeckHX_observedPledges.
-// We feed those responses into ProcessPage instead of firing our own walk,
-// so RSI sees one walk total instead of two.
-StardeckHX._observerProcessedPages = {};
-StardeckHX._processObservedPage = function(record) {
-  if (StardeckHX._observerProcessedPages[record.pageNo]) return;
-  StardeckHX._observerProcessedPages[record.pageNo] = true;
-  var $tmp = $('<div>').html(record.html);
-  var page = $tmp.find('.page-wrapper')[0] || $tmp[0];
-  StardeckHX.ProcessPage(page, record.pageNo);
-};
-
 StardeckHX.$list = null;                            // Element where we display the pledges
 StardeckHX._inventory = [];                         // Inventory containing all pledges
 StardeckHX._debugRoot = $('#StardeckHX-js-0').attr('src').replace(/(.*)web_resources.*/, "$1");
@@ -129,25 +115,7 @@ StardeckHX.Initialize = function()
 
             StardeckHX._activeHash = safetySalt + payload.data.rendered.length + ':' + btoa(payload.data.rendered.substr(39, 20)) + ':' + StardeckHX._cacheSalt;
 
-            // Wait briefly to see if upstream HangarXPLOR is fetching pledge pages.
-            // If observed XHRs land in this window, leech upstream's responses
-            // instead of firing our own walk. Otherwise, fall through to the
-            // normal LoadCache + LoadPage flow.
-            setTimeout(function() {
-              var observed = window.__StardeckHX_observedPledges || [];
-              if (observed.length > 0) {
-                StardeckHX.Log('Observer mode: leeching from upstream HangarXPLOR');
-                StardeckHX._observerMode = true;
-                observed.forEach(StardeckHX._processObservedPage);
-                window.addEventListener('message', function(event) {
-                  if (event.source !== window) return;
-                  if (!event.data || event.data.type !== 'stardeckhx.observer.pledge-response') return;
-                  StardeckHX._processObservedPage({ pageNo: event.data.pageNo, html: event.data.html });
-                });
-              } else {
-                StardeckHX.LoadCache(StardeckHX.LoadPage);
-              }
-            }, 1500);
+            StardeckHX.LoadCache(StardeckHX.LoadPage);
           });
           
         } else {

@@ -21,19 +21,10 @@
       "https://robertsspaceindustries.com/*",
       "https://www.robertsspaceindustries.com/*",
       "https://stardeck.space/*",
-      "http://localhost/*"
+      "http://localhost/*",
+      "http://localhost:*/*"
   ],
   "content_scripts": [
-      {
-          "matches": [
-              "https://robertsspaceindustries.com/*/account/pledges*",
-              "https://www.robertsspaceindustries.com/*/account/pledges*"
-          ],
-          "js": [
-              "content_scripts/upstream-observer.js"
-          ],
-          "run_at": "document_start"
-      },
       {
           "matches": [
               "https://robertsspaceindustries.com/*/account/pledges*",
@@ -47,7 +38,8 @@
       {
           "matches": [
               "https://stardeck.space/*",
-              "http://localhost/*"
+              "http://localhost/*",
+              "http://localhost:*/*"
           ],
           "js": [
               "content_scripts/trusted-site-relay.js"
