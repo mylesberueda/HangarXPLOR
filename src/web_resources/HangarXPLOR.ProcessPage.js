@@ -24,7 +24,9 @@ StardeckHX.ProcessPage = function($page, pageNo)
   {
     StardeckHX.SaveCache();
     StardeckHX.MarkLoadingComplete();
-  } else {
+  } else if (!StardeckHX._observerMode) {
     StardeckHX.LoadPage(pageNo + 1);
   }
+  // In observer mode we don't fire our own LoadPage; we wait for upstream's
+  // next /account/pledges XHR to land via the observer.
 }

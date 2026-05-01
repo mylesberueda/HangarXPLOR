@@ -23,8 +23,10 @@
         return pattern !== null && TRUSTED_ORIGINS.indexOf(pattern) !== -1;
     }
 
+    var VERSION = (chrome.runtime && chrome.runtime.getManifest) ? chrome.runtime.getManifest().version : null;
+
     function respond(requestId, status, payload) {
-        var message = { type: MSG_RESPONSE, requestId: requestId, status: status };
+        var message = { type: MSG_RESPONSE, requestId: requestId, status: status, version: VERSION };
         if (status === 'ok') message.data = payload; else message.error = payload;
         window.postMessage(message, window.location.origin);
     }

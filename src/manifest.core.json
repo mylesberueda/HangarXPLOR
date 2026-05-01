@@ -30,6 +30,16 @@
               "https://www.robertsspaceindustries.com/*/account/pledges*"
           ],
           "js": [
+              "content_scripts/upstream-observer.js"
+          ],
+          "run_at": "document_start"
+      },
+      {
+          "matches": [
+              "https://robertsspaceindustries.com/*/account/pledges*",
+              "https://www.robertsspaceindustries.com/*/account/pledges*"
+          ],
+          "js": [
               "content_scripts/loader.js"
           ],
           "run_at": "document_end"
