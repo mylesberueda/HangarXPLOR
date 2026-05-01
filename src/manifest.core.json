@@ -15,8 +15,7 @@
   },
   "permissions": [
       "storage",
-      "unlimitedStorage",
-      "scripting"
+      "unlimitedStorage"
   ],
   "host_permissions": [
       "https://robertsspaceindustries.com/*",
@@ -34,6 +33,16 @@
               "content_scripts/loader.js"
           ],
           "run_at": "document_end"
+      },
+      {
+          "matches": [
+              "https://stardeck.space/*",
+              "http://localhost/*"
+          ],
+          "js": [
+              "content_scripts/trusted-site-relay.js"
+          ],
+          "run_at": "document_start"
       }
   ],
   "web_accessible_resources": [
